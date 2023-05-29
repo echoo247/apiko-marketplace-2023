@@ -1,0 +1,12 @@
+.wrapper_wrapper_product {
+    max-width: 855px;
+    margin: 0 auto;
+    height: auto;
+}
+
+.product_wrapper_all_card {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(210px,210px));
+    justify-content: space-between;
+    margin-top: 15px;
+}

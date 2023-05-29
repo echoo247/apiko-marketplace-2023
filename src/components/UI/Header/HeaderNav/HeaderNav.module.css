@@ -1,0 +1,9 @@
+.header_nav {
+    margin: 0 auto;
+    padding: 20px 0;
+    max-width: 1130px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

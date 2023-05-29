@@ -1,0 +1,9 @@
+.header {
+    height: auto;
+    width: auto;
+    left: 0;
+    top: 0;
+    border-radius: 0;
+
+    background: linear-gradient(180deg, #090810 0%, #171236 100%);
+}

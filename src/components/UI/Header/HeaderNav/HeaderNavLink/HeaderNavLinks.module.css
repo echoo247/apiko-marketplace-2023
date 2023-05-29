@@ -1,0 +1,47 @@
+.header_nav_links {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.buttonSell {
+    background: #349a89;
+    border-radius: 4px;
+    border: none;
+    font-family: Helvetica,sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    text-align: center;
+    letter-spacing: 1px;
+    color: #fff;
+    transition: .3s;
+    text-transform: uppercase;
+    Width: 131px;
+    Height: 31px;
+}
+.buttonSell:hover {
+    background: #378877;
+}
+
+.buttonLogin {
+    border: none;
+    font-family: Helvetica,sans-serif;
+    background-color: transparent;
+    font-size: 11px;
+    line-height: 40px;
+    float: left;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-left: 33px;
+    margin-right: 33px;
+    color: #FFFFFF;
+}
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    vertical-align: middle;
+    border-style: none;
+}
