@@ -1,0 +1,142 @@
+.header_nav_links {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.buttonSell {
+    background: #349a89;
+    border-radius: 4px;
+    border: none;
+    font-family: Helvetica,sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    text-align: center;
+    letter-spacing: 1px;
+    color: #fff;
+    transition: .3s;
+    text-transform: uppercase;
+    Width: 131px;
+    Height: 31px;
+}
+.buttonSell:hover {
+    background: #378877;
+}
+
+.buttonLogin {
+    border: none;
+    font-family: Helvetica,sans-serif;
+    background-color: transparent;
+    font-size: 11px;
+    line-height: 40px;
+    float: left;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-left: 33px;
+    margin-right: 33px;
+    color: #FFFFFF;
+}
+
+.buttonLogin_state {
+    color: #2B2B2B;
+}
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    vertical-align: middle;
+    border-style: none;
+}
+
+.popup_position {
+    position: relative;
+    display: flex;
+}
+
+.popup_position:hover .avatar_block_popup {
+    display: block;
+    width: 20em;
+}
+
+.avatar_block_popup {
+    display: none;
+    position: absolute;
+    height: 150px;
+    width: 204px;
+    background: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    margin-top: 42px;
+    right: 0;
+}
+
+.avatar_popup_wrapper {
+    max-width: 100%;
+    max-height: 107px;
+    margin: 9px 0 0 16px;
+}
+
+.popup_header {
+    display: flex;
+    justify-content: flex-start;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    vertical-align: middle;
+    border-style: none;
+}
+
+.popup_text_wrapper {
+    text-align: left;
+    padding: 0 0 0 13px;
+}
+
+.popup_text {
+    font-family: Helvetica,sans-serif;
+    font-size: 10px;
+    line-height: 14px;
+    letter-spacing: 1px;
+    color: #000000;
+    text-transform: capitalize;
+}
+
+.popup_email {
+    color: #979797;
+    text-transform: lowercase;
+}
+.popup_profile {
+    color: #349A89;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.popup_edit_profile {
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    text-align: left;
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+
+.popup_line {
+    max-width: 100%;
+    border: 1px solid #E4E4E4;
+}
+
+.popup_logout {
+    color: #349A89;
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    text-align: left;
+    text-transform: uppercase;
+    margin: 9px 0 0 16px;
+}

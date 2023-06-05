@@ -1,0 +1,17 @@
+.container {
+    margin: 50px auto auto;
+    padding: 25px 25px 20px;
+    max-width: 1000px;
+    background-color: #fff;
+    box-shadow: 0 2px 42px rgb(0 0 0 / 11%);
+    border-radius: 7px;
+}
+
+.title {
+    margin-bottom: 25px;
+    text-align: center;
+    font-family: Helvetica, sans-serif;
+    font-size: 22px;
+    line-height: 25px;
+    color: #282828;
+}

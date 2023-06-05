@@ -1,14 +1,14 @@
-import React, {ReactNode} from 'react';
+import React, {FC, ReactNode} from 'react';
 
 
-interface ButtonHeaderProps {
+interface ButtonProps {
     children: ReactNode,
     className?: string,
     onClick?: (e: React.FormEvent<HTMLButtonElement>) => void
     type?: "button" | "submit" | "reset" | undefined
 }
 
-const ButtonHeader = ({children, className, onClick,type}: ButtonHeaderProps) => {
+const Button: FC<ButtonProps> = ({children, className, onClick,type}) => {
     return (
         <button type={type} onClick={onClick} className={className}>
             {children}
@@ -16,4 +16,4 @@ const ButtonHeader = ({children, className, onClick,type}: ButtonHeaderProps) =>
     );
 };
 
-export default ButtonHeader;
+export default Button;

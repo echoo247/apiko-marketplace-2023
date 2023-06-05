@@ -1,14 +1,14 @@
 import React from 'react';
+import ProductInfo from "../components/ProductInfo/ProductInfo";
 import Header from "../components/Header/Header";
-import LoginForm from "../components/LoginForm/LoginForm";
 
-const Login = () => {
+const ProductPage = () => {
     return (
         <div>
             <Header/>
-            <LoginForm/>
+            <ProductInfo/>
         </div>
     );
 };
 
-export default Login;
+export default ProductPage;

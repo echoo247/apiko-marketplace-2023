@@ -2,92 +2,80 @@ import React from 'react';
 import styled from './ProductUpload.module.css'
 import { Input } from "../UI/Common/Input/Input";
 import InputLabel from "../UI/Common/InputLabel/InputLabel";
-import ButtonHeader from "../UI/Common/Button-Header/ButtonHeader";
+import ButtonHeader from "../UI/Common/Button/Button";
 import {SubmitHandler, useForm, FormProvider} from "react-hook-form";
 import photo from '../../assets/icons/Mask1.svg'
-import {IProduct} from "../../types";
-import {useAddProductMutation} from "../../store/userAPI";
+import {IProduct, IUser} from "../../types";
+import {useAddProductMutation} from "../../store/productAPI";
+import FormWrapper from "../UI/Common/FormWrapper/FormWrapper";
+import * as yup from "yup";
+import {useGetUserQuery, useUpdateUserMutation} from "../../store/userAPI";
+import {useNavigate} from "react-router-dom";
 
 
-export type Inputs = {
-    title: string,
-    description: string,
-    price: string,
-    location: string
-}
 
-const defaultValues = {
-    title: '' ,
-    location: '',
-    description: '',
-    price: ''
-}
+
+const schema = yup.object({
+    title: yup.string().required(),
+    description: yup.string().required(),
+    price: yup.number().required(),
+    location: yup.string().required(),
+}).required();
+type FormData = yup.InferType<typeof schema>;
+
+
 
 const ProductUpload = () => {
-    const methods = useForm<Inputs>({
-        defaultValues
-    })
+    const idUser = window.localStorage.getItem("userId")
+    const methods = useForm<FormData>()
+    const {data: user} = useGetUserQuery(Number(idUser))
     const [ addProduct ] = useAddProductMutation()
+    const [updateUser] = useUpdateUserMutation()
+    const navigation = useNavigate()
 
-    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const onSubmit: SubmitHandler<FormData> = async (data) => {
 
-        const newProduct = {
-            ...data,
-            id: Date.now().toString(),
-            photos: photo,
-            createdAt: Date.now().toString(),
-            saved: false
+        if(user) {
+            const newProduct = {
+                ...data,
+                id: Date.now(),
+                photos: photo,
+                ownerId: user.id,
+                createdAt: Date.now().toString(),
+                saved: false
+            }
+            await addProduct(newProduct as IProduct)
+
+            if (user.productId) {
+                const newObject = {
+                    ...user,
+                    productId: [...user.productId, newProduct.id]
+                }
+                await updateUser(newObject as IUser)
+                console.log("array", newObject)
+            }
+            methods.reset()
+            navigation('/')
         }
-        await addProduct(newProduct as IProduct)
-        console.log(newProduct);
     }
-  /*  const addNewProduct = async (event: React.FormEvent<HTMLButtonElement>) => {
-        event.preventDefault()
-        console.log(product)
-
-        const newProduct = {
-            ...product,
-            id: Date.now().toString(),
-            photos: photo,
-            createdAt: Date.now().toString(),
-            saved: false
-        }
-        console.log(newProduct)
-
-        await addProduct(newProduct as IProduct)
-        setProduct(newProduct)
-    }
-
-
-    const handleAddProduct = async () => {
-        try {
-            await addProduct(product).unwrap()
-            setProduct(initialValue)
-        } catch {
-            console.log(error)
-        }
-    }*/
-
 
 
     const styleDescription: string = `${styled.input_wrapper_area} ${styled.input_description}`
     return (
         <FormProvider {...methods}>
-        <div className={styled.container}>
-            <p className={styled.title}>Add Product</p>
-            <div className={styled.wrapper_upload}>
+            <FormWrapper name="Add Product" className={styled.wrapper_upload}>
                 <form onSubmit={methods.handleSubmit(onSubmit)}>
-                    <InputLabel styles={styled.form_upload}>
+                    <InputLabel className={styled.form_upload}>
                         TITLE
                         <span className={styled.input_wrapper_area}>
 
                           <Input
-                            placeholder="For example: Iron man suit"
-                            name='title'
+                              placeholder="For example: Iron man suit"
+                              name='title'
                           />
                         </span>
                     </InputLabel>
-                    <InputLabel styles={styled.form_upload}>
+                    <InputLabel className={styled.form_upload}>
                         LOCATION
                         <span className={styled.input_wrapper_area}>
                             <Input
@@ -96,7 +84,7 @@ const ProductUpload = () => {
                             />
                         </span>
                     </InputLabel>
-                    <InputLabel styles={styled.form_upload}>
+                    <InputLabel className={styled.form_upload}>
                         DESCRIPTION
                         <span  className={styleDescription}>`
 
@@ -107,7 +95,7 @@ const ProductUpload = () => {
                             />
                         </span>
                     </InputLabel>
-                    <InputLabel styles={styled.form_upload}>
+                    <InputLabel className={styled.form_upload}>
                         PHOTOS
                         <span className={styled.input_wrapper_area}>
                             {/*<Input
@@ -117,7 +105,7 @@ const ProductUpload = () => {
                             />*/}
                         </span>
                     </InputLabel>
-                    <InputLabel styles={styled.form_upload}>
+                    <InputLabel className={styled.form_upload}>
                         PRICE
                         <span className={styled.input_wrapper_area}>
 
@@ -130,8 +118,7 @@ const ProductUpload = () => {
                     </InputLabel>
                     <ButtonHeader className={styled.button_upload}>Submit</ButtonHeader>
                 </form>
-            </div>
-        </div>
+            </FormWrapper>
         </FormProvider>
 
     );

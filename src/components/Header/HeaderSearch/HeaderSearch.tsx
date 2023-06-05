@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from './HeaderSearch.module.css'
-import InputLabel from "../../Common/InputLabel/InputLabel";
-import searchIcon from '../../../../assets/icons/search_icon.svg'
-import locationIcon from '../../../../assets/icons/location_filled.svg'
-import ButtonHeader from "../../Common/Button-Header/ButtonHeader";
-import {Input} from "../../Common/Input/Input";
+import InputLabel from "../../UI/Common/InputLabel/InputLabel";
+import searchIcon from '../../../assets/icons/search_icon.svg'
+import locationIcon from '../../../assets/icons/location_filled.svg'
+import ButtonHeader from "../../UI/Common/Button/Button";
+import {Input} from "../../UI/Common/Input/Input";
 import {useForm, FormProvider} from "react-hook-form";
 
 type Search = {

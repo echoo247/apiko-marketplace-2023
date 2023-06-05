@@ -1,9 +1,56 @@
 {
-  "Products": [
+  "users": [
+    {
+      "email": "bread@gamil.com",
+      "avatar": "https://via.placeholder.com/150/92c952",
+      "fullName": "Tony Stark",
+      "location": "Usa",
+      "phone": "0960484212",
+      "createdAt": "1685911238652",
+      "productId": [
+        1,
+        2,
+        3,
+        4,
+        1685954951158,
+        1685955008034,
+        1685955012604,
+        1685955100095
+      ],
+      "id": 1
+    },
+    {
+      "id": 2,
+      "email": "bed@gamil.com",
+      "avatar": "https://via.placeholder.com/150/92c952",
+      "fullName": "Stark",
+      "location": "Ukraine",
+      "phone": "0960484212",
+      "createdAt": "1685911238652",
+      "productId": [
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "id": 1685911238652,
+      "email": "btihovic@gmail.com",
+      "fullName": "Bogdan Nebo",
+      "createdAt": "1685911238652"
+    },
+    {
+      "1685911238652": "",
+      "id": 1685911238653
+    }
+  ],
+  "products": [
     {
       "id": 1,
       "title": "bread",
       "photos": "https://via.placeholder.com/150/92c952",
+      "ownerId": "1",
       "description": "bread",
       "location": "Usa",
       "price": "44",
@@ -12,103 +59,80 @@
     },
     {
       "id": 2,
+      "ownerId": "1",
       "title": "bread",
       "photos": "https://via.placeholder.com/150/92c952",
       "description": "bread",
       "location": "Usa",
       "price": "44",
-      "createdAt": "bread",
+      "createdAt": "1685911238652",
       "saved": "false"
     },
     {
       "id": 3,
+      "ownerId": "2",
       "title": "bread",
       "photos": "https://via.placeholder.com/150/92c952",
       "description": "bread",
       "location": "Usa",
       "price": "44",
-      "createdAt": "bread",
+      "createdAt": "1685911238652",
       "saved": "false"
     },
     {
       "id": 4,
+      "ownerId": "1",
       "title": "bread",
       "photos": "https://via.placeholder.com/150/92c952",
       "description": "bread",
       "location": "Usa",
       "price": "44",
-      "createdAt": "bread",
+      "createdAt": "1685911238652",
       "saved": "false"
     },
     {
       "id": 5,
+      "ownerId": "2",
       "title": "bread",
       "photos": "https://via.placeholder.com/150/92c952",
       "description": "bread",
       "location": "Usa",
       "price": "44",
-      "createdAt": "bread",
+      "createdAt": "1685911238652",
       "saved": "false"
     },
     {
       "id": 6,
+      "ownerId": "1",
       "title": "bread",
       "photos": "https://via.placeholder.com/150/92c952",
       "description": "bread",
       "location": "Usa",
       "price": "44",
-      "createdAt": "bread",
+      "createdAt": "1685911238652",
       "saved": "false"
     },
     {
       "id": 7,
+      "ownerId": "1",
       "title": "bread",
       "photos": "https://via.placeholder.com/150/92c952",
       "description": "bread",
       "location": "Usa",
       "price": "44",
-      "createdAt": "bread",
+      "createdAt": "1685911238652",
       "saved": "false"
     },
     {
       "id": 8,
+      "ownerId": "1",
       "title": "bread",
       "photos": "https://via.placeholder.com/150/92c952",
       "description": "bread",
       "location": "Usa",
       "price": "44",
-      "createdAt": "bread",
+      "createdAt": "1685911238652",
       "saved": "false"
-    },
-    {
-      "id": 9,
-      "title": "bread",
-      "photos": "https://via.placeholder.com/150/92c952",
-      "description": "bread",
-      "location": "Usa",
-      "price": "44",
-      "createdAt": "bread",
-      "saved": "false"
-    },
-    {
-      "title": "title",
-      "description": "description",
-      "price": "150000",
-      "location": "location",
-      "id": "1685119863272",
-      "photos": "/static/media/Mask1.6e55c365b2c471fc8b3d2fa72bf6541a.svg",
-      "createdAt": "1685119863272",
-      "saved": false
-    },
-    {
-      "title": "title",
-      "description": "description",
-      "price": "150000",
-      "location": "location",
-      "id": "1685119883111",
-      "photos": "/static/media/Mask1.6e55c365b2c471fc8b3d2fa72bf6541a.svg",
-      "createdAt": "1685119883111",
-      "saved": false
     }
   ]
 }

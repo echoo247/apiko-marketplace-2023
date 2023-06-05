@@ -1,43 +1,68 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import {IProduct} from "../types";
+import {IUser} from "../types";
 
 
 
-export interface Product extends IProduct {
+
+export interface User extends IUser {
 
 }
 
-export const productAPI = createApi({
-    reducerPath: 'productAPI',
-    tagTypes: ['Products'],
+export const userAPI = createApi({
+    reducerPath: 'userAPI',
+    tagTypes: ['Users'],
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:3001/'
     }),
     endpoints: (builder) => ({
-        getProducts: builder.query<Product[], void>({
-            query: () => `products/`,
+        getUsers: builder.query<User[], void>({
+            query: () => `users/`,
             providesTags: (result = []) => result
-
                 ?
-
-                [...result.map(({ id }) => ({ type: 'Products', id } as const)),
-                { type: 'Products' as const, id: 'LIST' },]
-
+                [...result.map(({ id }) => ({ type: 'Users', id } as const)),
+                    { type: 'Users' as const, id: 'LIST' },]
                 :
-                [{type: 'Products' as const, id: 'LIST'}],
+                [{type: 'Users' as const, id: 'LIST'}],
 
         }),
-        addProduct: builder.mutation<Product, Partial<Product>>({
+        getUser: builder.query<User, number>({
+            query: (id) => {
+                return {url: `users/${id}`}
+            },
+            providesTags: (result, error, id) => [{ type: 'Users', id }]
+
+        }),
+        checkIsAuth: builder.query<User, number>({
+            query: (id) => {
+                return {url: `users/${id}`}
+            },
+            providesTags: (result, error, id) => [{ type: 'Users', id }]
+
+        }),
+        addUser: builder.mutation<User, Partial<User>>({
             query: (body) => {
                 return {
-                    url: 'products',
+                    url: 'users',
                     method: 'POST',
                     body,
                 }
             },
-            invalidatesTags: [{type: 'Products', id: 'LIST'}]
+            invalidatesTags: [{type: 'Users', id: 'LIST'}]
+        }),
+        updateUser: builder.mutation<User, Partial<User>>({
+            query(data) {
+                const { id, ...body } = data
+                return {
+                    url: `users/${id}`,
+                    method: 'PUT',
+                    body,
+                }
+            },
+            // Invalidates all queries that subscribe to this Post `id` only.
+            // In this case, `getPost` will be re-run. `getPosts` *might*  rerun, if this id was under its results.
+            invalidatesTags: (result, error, { id }) => [{ type: 'Users', id }],
         }),
     }),
 });
 
-export const {useGetProductsQuery, useAddProductMutation} = productAPI;
+export const {useGetUserQuery, useGetUsersQuery, useAddUserMutation, useCheckIsAuthQuery, useUpdateUserMutation} = userAPI;

@@ -1,14 +1,14 @@
 import React from 'react';
 import Header from "../components/Header/Header";
-import LoginForm from "../components/LoginForm/LoginForm";
+import RegisterForm from "../components/RegisterForm/RegisterForm";
 
-const Login = () => {
+const Register = () => {
     return (
         <div>
             <Header/>
-            <LoginForm/>
+            <RegisterForm/>
         </div>
     );
 };
 
-export default Login;
+export default Register;

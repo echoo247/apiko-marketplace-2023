@@ -5,11 +5,11 @@ import heart from '../../assets/icons/heart-like-love-favourite-dating.svg'
 import {IProduct} from "../../types";
 
 
-interface CardItemProps extends Pick<IProduct, "title" | "price" | "photos">{
+interface CardItemProps extends Pick<IProduct, "title" | "price" | "photos" | "id">{
 
 }
 
-const CardItem = ({title, price, photos}: CardItemProps) => {
+const CardItem = ({title, price, photos, id}: CardItemProps) => {
 
     const photoSrc = photos || ''
 
@@ -17,7 +17,7 @@ const CardItem = ({title, price, photos}: CardItemProps) => {
     return (
         <div className={styled.product_card}>
             <div className={styled.product_card_image_block}>
-                <Link to='/'>
+                <Link to={`/${id}`} >
                     <img className={styled.product_card_image} src={photoSrc} alt="card"/>
                 </Link>
                 <div className={styled.product_card_circle}>
@@ -25,7 +25,7 @@ const CardItem = ({title, price, photos}: CardItemProps) => {
                 </div>
             </div>
             <div className={styled.product_card_info_block}>
-                <Link to={'/'}>
+                <Link to={`/${id}`}>
                     <h2 className={styled.product_card_title}>{title}</h2>
                 </Link>
                 <div>

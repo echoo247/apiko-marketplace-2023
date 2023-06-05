@@ -5,7 +5,7 @@ export const routes = {
   PROFILE_EDIT: '/profile/edit',
   SAVED: '/saved',
   HOME: '/',
-  PRODUCT: '/products/:id',
+  PRODUCT: '/:id',
   PRODUCT_UPLOAD: '/upload',
   USER_PAGE: '/users/:id',
   INBOX: '/inbox',

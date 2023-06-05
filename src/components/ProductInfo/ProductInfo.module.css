@@ -1,0 +1,171 @@
+.wrapper {
+    margin: auto;
+    max-width: 855px;
+    width: 100%;
+}
+
+.position_info {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
+.product_detail {
+    max-width: 583px;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #e4e4e4;
+    box-sizing: border-box;
+    box-shadow: 0 5px 15px hsl(0deg 0% 48% / 5%);
+    border-radius: 4px;
+}
+
+.product_detail_image_block {
+    position: relative;
+}
+
+.product_detail_image {
+    object-fit: cover;
+    padding: 3px 4px 0;
+    max-height: 275px;
+    width: 574px;
+    cursor: pointer;
+}
+
+.product_detail_price {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    border-radius: 10px 0 0 0;
+    padding: 5px 15px;
+    background-color: #fff;
+    font-family: Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 22px;
+    color: #101010;
+}
+
+.product_detail_container {
+    padding: 10px 20px;
+}
+
+.product_detail_detail {
+    display: flex;
+    align-items: flex-end;
+}
+
+.product_detail_text_m {
+    font-family: Helvetica, sans-serif;
+    font-size: 18px;
+    line-height: 21px;
+    color: #373738;
+}
+
+.product_detail_text {
+    margin: 10px 0 0 10px;
+    font-family: Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #9d9d9d;
+}
+
+.product_detail_description {
+    white-space: pre-wrap;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid hsla(0,0%,59.2%,.16470588235294117);
+    font-family: Helvetica, sans-serif;
+    font-size: 14px;
+    color: #2b2b2b;
+}
+
+
+.product_detail_other {
+    max-width: 259px;
+    width: 100%;
+}
+
+.product_detail_owner {
+    position: relative;
+    max-height: 150px;
+    height: 100%;
+}
+.product_detail_owner_top {
+    position: absolute;
+    height: 50px;
+    background-color: #349a89;
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+}
+
+.product_detail_chat {
+    height: 50px;
+    padding: 0;
+    margin-top: 25px;
+    text-transform: uppercase;
+    border: none;
+    width: 259px;
+}
+.correct_button {
+    background: #349a89;
+    border-radius: 5px;
+    font-size: 16px;
+    letter-spacing: .4px;
+    color: #fff;
+    transition: .3s;
+    margin-top: 14px;
+}
+
+.product_detail_like {
+    color: #535353;
+    background: #FFFFFF;
+    border: 1px solid #349A89;
+    margin-top: 10px;
+}
+
+.product_detail_like_position {
+    display: flex;
+    justify-content: center;
+}
+
+.owner_info {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #dedee0;
+    box-sizing: border-box;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 0 10px;
+    font-family: Helvetica,sans-serif;
+    font-size: 15px;
+}
+
+.avatar_owner {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-align: center;
+    text-transform: uppercase;
+    position: relative;
+    flex-shrink: 0;
+    vertical-align: top;
+    font-size: calc(2.4rem);
+}
+
+.product_detail_fullname {
+    margin-top: 10px;
+    color: #2b2b2b;
+}
+
+.product_detail_location {
+    margin-top: 5px;
+    color: rgba(43,43,43,.5019607843137255);
+}

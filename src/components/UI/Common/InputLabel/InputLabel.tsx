@@ -4,12 +4,12 @@ import styled from './InputLabel.module.css'
 
 interface InputLabelProps {
     children: ReactNode,
-    styles?: string
+    className?: string
 }
 
-const InputLabel = ({children, styles}: InputLabelProps) => {
+const InputLabel = ({children, className}: InputLabelProps) => {
     return (
-        <label className={`${styled.input_label} ${styles}`}>
+        <label className={`${styled.input_label} ${className}`}>
             {children}
         </label>
     );

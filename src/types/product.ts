@@ -1,12 +1,11 @@
-import {IUser} from "./user";
 
 
 export interface IProduct {
-    id: string;
+    id: number;
     photos: string;
-    //ownerId: Pick<IUser, "id">;
+    ownerId: number
     title: string;
-    price: string;
+    price: number;
     description: string;
     location: string;
     createdAt: string;
