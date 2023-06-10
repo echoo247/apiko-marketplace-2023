@@ -43,7 +43,18 @@ export const productAPI = createApi({
             providesTags: (result, error, id) => [{ type: 'Products', id }]
 
         }),
+        updateProduct: builder.mutation<User, Partial<User>>({
+            query(data) {
+                const { id, ...body } = data
+                return {
+                    url: `products/${id}`,
+                    method: 'PATCH',
+                    body,
+                }
+            },
+            invalidatesTags: (result, error, { id }) => [{ type: 'Products', id }],
+        }),
     }),
 });
 
-export const {useGetProductsQuery, useGetProductQuery, useAddProductMutation} = productAPI;
+export const {useGetProductsQuery, useGetProductQuery, useAddProductMutation, useUpdateProductMutation} = productAPI;

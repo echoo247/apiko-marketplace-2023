@@ -87,7 +87,7 @@
     display: flex;
 }
 
-.filter_price_low {
+.filter_price {
     border-radius: 5px;
     background: #f9fafb;
     max-height: 60px;
@@ -111,4 +111,9 @@
     width: 12px;
     height: 1px;
     background-color: #dedee0;
+}
+
+.filter_submit {
+    margin-left: 10px;
+    font-size: 1em;
 }

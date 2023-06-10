@@ -1,6 +1,5 @@
-import {createAction, createAsyncThunk, createReducer, createSlice} from '@reduxjs/toolkit';
+import {createAction, createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
-import {boolean} from "yup";
 import {userAPI} from "../store/userAPI";
 
 interface User {
@@ -46,7 +45,7 @@ const authSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(logoutAction, (state) => {
-                state.isAuth = true
+                state.isAuth = false
                 state.loading = false
                 state.error = null
                 console.log('s', state)

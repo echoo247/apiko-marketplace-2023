@@ -1,26 +1,49 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from './Filter.module.css'
 import categoryIcon from '../../assets/icons/selectArrow.svg'
 import gridIcon from '../../assets/icons/selectGrid.svg'
 import InputLabel from "../UI/Common/InputLabel/InputLabel";
 import {Input} from "../UI/Common/Input/Input";
-import {FormProvider, useForm} from "react-hook-form";
+import {FormProvider, SubmitHandler, useForm} from "react-hook-form";
+import {useAppDispatch, useAppSelector} from "../../store/Redux";
+import {FilterType, productsActions} from "../../features/filterSlice";
+import * as yup from "yup";
+import Button from "../UI/Common/Button/Button";
 
-interface Price {
-    priceMin: number,
-    priceMax: number
-}
-
-const defaultValues = {
-    priceMin: 0,
-    priceMax: 0
-}
+const schema = yup.object({
+    priceTo: yup.number().positive(),
+    priceFrom: yup.number().positive(),
+}).required();
+type FormData = yup.InferType<typeof schema>;
 
 
 const Filter = () => {
-    const methods = useForm<Price>({
-        defaultValues
-    })
+    const dispatch = useAppDispatch();
+    const methods = useForm<FormData>()
+    const products = useAppSelector((state) => state.product.products);
+
+
+    useEffect(() => {
+        if(products) {
+            let priceFrom = Infinity;
+            let priceTo = -Infinity;
+            products.forEach(function(object) {
+                if (object.price < priceFrom) {
+                    priceFrom = object.price;
+                }
+                if (object.price > priceTo) {
+                    priceTo = object.price;
+                }
+            });
+            methods.setValue('priceTo', priceTo)
+            methods.setValue('priceFrom', priceFrom)
+        }
+    }, [products, methods.formState])
+
+    const onSubmit: SubmitHandler<FormData> =  (data) => {
+        dispatch(productsActions.searchAndSorted(data as FilterType))
+        methods.reset()
+    }
 
     return (
         <div className={styled.header_filter}>
@@ -43,26 +66,27 @@ const Filter = () => {
                             </div>
                         </div>
                         <FormProvider {...methods}>
-                            <form className={styled.filter_price}>
+                            <form onSubmit={methods.handleSubmit(onSubmit)} className={styled.filter_price}>
                                 <InputLabel>
-                                <span className={styled.filter_price_low}>
+                                <span className={styled.filter_price}>
                                     <Input className={styled.filter_price_wrapper}
                                            type="number"
-                                           name="priceForm"
+                                           name="priceFrom"
                                            placeholder="Price from (USD)"
                                     />
                                 </span>
                                 </InputLabel>
                                 <span className={styled.filter_line}></span>
                                 <InputLabel>
-                                <span className={styled.filter_price_low}>
-                                    <Input className={styled.filter_price_wrapper}
+                                    <span className={styled.filter_price}>
+                                        <Input className={styled.filter_price_wrapper}
                                            type="number"
-                                           name="priceForm"
+                                           name="priceTo"
                                            placeholder="Price to (USD)"
-                                    />
-                                </span>
+                                        />
+                                    </span>
                                 </InputLabel>
+                                <Button className={`${styled.filter_price_wrapper} ${styled.filter_submit}`}>Price</Button>
                             </form>
                         </FormProvider>
 

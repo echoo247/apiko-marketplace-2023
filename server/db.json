@@ -12,10 +12,7 @@
         2,
         3,
         4,
-        1685954951158,
-        1685955008034,
-        1685955012604,
-        1685955100095
+        1686131821333
       ],
       "id": 1
     },
@@ -29,110 +26,101 @@
       "createdAt": "1685911238652",
       "productId": [
         5,
-        6,
-        7,
-        8
+        6
       ]
     },
     {
-      "id": 1685911238652,
-      "email": "btihovic@gmail.com",
-      "fullName": "Bogdan Nebo",
-      "createdAt": "1685911238652"
+      "id": 1686423645757,
+      "email": "head@gmail.com",
+      "fullName": "Bred Pit",
+      "createdAt": "1686423645757",
+      "phone": "",
+      "location": "",
+      "avatar": "",
+      "productId": []
     },
     {
-      "1685911238652": "",
-      "id": 1685911238653
+      "1686423645757": "",
+      "id": 1686423645758
     }
   ],
   "products": [
     {
       "id": 1,
-      "title": "bread",
+      "title": "bread 1",
       "photos": "https://via.placeholder.com/150/92c952",
-      "ownerId": "1",
+      "ownerId": 1,
       "description": "bread",
       "location": "Usa",
-      "price": "44",
+      "price": 1,
       "createdAt": "bread",
-      "saved": "false"
+      "saved": false
     },
     {
       "id": 2,
-      "ownerId": "1",
-      "title": "bread",
+      "ownerId": 1,
+      "title": "bread 2",
       "photos": "https://via.placeholder.com/150/92c952",
       "description": "bread",
-      "location": "Usa",
-      "price": "44",
+      "location": "Canada",
+      "price": 100,
       "createdAt": "1685911238652",
-      "saved": "false"
+      "saved": true
     },
     {
       "id": 3,
-      "ownerId": "2",
-      "title": "bread",
+      "ownerId": 1,
+      "title": "bread 3",
       "photos": "https://via.placeholder.com/150/92c952",
       "description": "bread",
-      "location": "Usa",
-      "price": "44",
+      "location": "Ternopil",
+      "price": 44,
       "createdAt": "1685911238652",
-      "saved": "false"
+      "saved": true
     },
     {
       "id": 4,
-      "ownerId": "1",
-      "title": "bread",
+      "ownerId": 1,
+      "title": "bread 6",
       "photos": "https://via.placeholder.com/150/92c952",
       "description": "bread",
-      "location": "Usa",
-      "price": "44",
+      "location": "Ternopil",
+      "price": 4400,
       "createdAt": "1685911238652",
-      "saved": "false"
+      "saved": false
     },
     {
       "id": 5,
-      "ownerId": "2",
-      "title": "bread",
+      "ownerId": 2,
+      "title": "bread 6",
       "photos": "https://via.placeholder.com/150/92c952",
       "description": "bread",
       "location": "Usa",
-      "price": "44",
+      "price": 4444,
       "createdAt": "1685911238652",
-      "saved": "false"
+      "saved": true
     },
     {
       "id": 6,
-      "ownerId": "1",
-      "title": "bread",
+      "ownerId": 2,
+      "title": "bread 6",
       "photos": "https://via.placeholder.com/150/92c952",
       "description": "bread",
       "location": "Usa",
-      "price": "44",
+      "price": 1044,
       "createdAt": "1685911238652",
-      "saved": "false"
+      "saved": true
     },
     {
-      "id": 7,
-      "ownerId": "1",
-      "title": "bread",
-      "photos": "https://via.placeholder.com/150/92c952",
-      "description": "bread",
-      "location": "Usa",
-      "price": "44",
-      "createdAt": "1685911238652",
-      "saved": "false"
-    },
-    {
-      "id": 8,
-      "ownerId": "1",
-      "title": "bread",
-      "photos": "https://via.placeholder.com/150/92c952",
-      "description": "bread",
-      "location": "Usa",
-      "price": "44",
-      "createdAt": "1685911238652",
-      "saved": "false"
+      "title": "123",
+      "location": "123",
+      "description": "123",
+      "price": 123,
+      "id": 1686131821333,
+      "photos": "/static/media/Mask1.6e55c365b2c471fc8b3d2fa72bf6541a.svg",
+      "ownerId": 1,
+      "createdAt": "1686131821333",
+      "saved": false
     }
   ]
 }

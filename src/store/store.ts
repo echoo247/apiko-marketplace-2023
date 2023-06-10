@@ -3,9 +3,11 @@ import {productAPI} from "./productAPI";
 import {setupListeners} from "@reduxjs/toolkit/query";
 import {userAPI} from "./userAPI";
 import authReducer from '../features/authSlice';
+import {productsReducer} from "../features/filterSlice";
 
 export const store = configureStore({
     reducer: {
+        product: productsReducer,
         auth: authReducer,
         [productAPI.reducerPath]: productAPI.reducer,
         [userAPI.reducerPath]: userAPI.reducer,

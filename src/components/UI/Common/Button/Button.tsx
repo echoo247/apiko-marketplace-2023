@@ -5,12 +5,15 @@ interface ButtonProps {
     children: ReactNode,
     className?: string,
     onClick?: (e: React.FormEvent<HTMLButtonElement>) => void
-    type?: "button" | "submit" | "reset" | undefined
 }
 
-const Button: FC<ButtonProps> = ({children, className, onClick,type}) => {
+const Button: FC<ButtonProps> = ({children, className, onClick, ...props}) => {
     return (
-        <button type={type} onClick={onClick} className={className}>
+        <button
+            onClick={onClick}
+            className={className}
+            {...props}
+        >
             {children}
         </button>
     );

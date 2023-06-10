@@ -52,6 +52,10 @@ const RegisterForm = () => {
             email: data.email,
             fullName: data.fullName,
             createdAt: Date.now().toString(),
+            phone: '',
+            location: '',
+            avatar: '',
+            productId: [],
         }
 
         await addUser(user)

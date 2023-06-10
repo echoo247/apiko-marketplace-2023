@@ -37,7 +37,7 @@ const HeaderNavLinks = () => {
                     <div className={styled.avatar_block_popup}>
                         <div className={styled.avatar_popup_wrapper}>
                             <div className={styled.popup_header}>
-                                <img src={avatar} alt={'Avatar'}/>
+                                <img style={{width: "50px"}} src={avatar} alt={'Avatar'}/>
                                 <div className={styled.popup_text_wrapper}>
                                     <div>
                                         <div className={styled.popup_text}>
@@ -57,7 +57,7 @@ const HeaderNavLinks = () => {
                         <div className={styled.popup_line}></div>
                         <div className={styled.popup_logout} onClick={handleLogout}>Logout</div>
                     </div>
-                    <img src={avatar} alt={'avatar'}/>
+                    <img style={{width: "40px"}} src={avatar} alt={'avatar'}/>
             </ButtonHeader>
                 : <Link to="/login">
                         <ButtonHeader className={link ?
@@ -67,10 +67,7 @@ const HeaderNavLinks = () => {
                     </Link>
             }
 
-
-
-
-            <Link to="/">
+            <Link to="/saved">
                 <img src={link ? heartBlack : heartWhite} alt='Heart'/>
             </Link>
         </div>

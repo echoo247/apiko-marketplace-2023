@@ -5,7 +5,7 @@ import InputLabel from "../UI/Common/InputLabel/InputLabel";
 import ButtonHeader from "../UI/Common/Button/Button";
 import {SubmitHandler, useForm, FormProvider} from "react-hook-form";
 import photo from '../../assets/icons/Mask1.svg'
-import {IProduct, IUser} from "../../types";
+import {IProduct} from "../../types";
 import {useAddProductMutation} from "../../store/productAPI";
 import FormWrapper from "../UI/Common/FormWrapper/FormWrapper";
 import * as yup from "yup";
@@ -48,10 +48,10 @@ const ProductUpload = () => {
 
             if (user.productId) {
                 const newObject = {
-                    ...user,
+                    id: user.id,
                     productId: [...user.productId, newProduct.id]
                 }
-                await updateUser(newObject as IUser)
+                await updateUser(newObject )
                 console.log("array", newObject)
             }
             methods.reset()

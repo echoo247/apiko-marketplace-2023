@@ -11,7 +11,7 @@ import {Link, useNavigate} from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 import {useGetUsersQuery} from "../../store/userAPI";
-import {logoutAction, registerUser} from "../../features/authSlice";
+import {logoutAction} from "../../features/authSlice";
 import {useAppDispatch} from "../../store/Redux";
 
 
@@ -42,22 +42,7 @@ const LoginForm = () => {
             navigate("/")
         }
         methods.reset()
-        console.log(findUser)
     }
-
-       /* const onSubmit: SubmitHandler<Login> = async (data) => {
-
-        const newProduct = {
-            ...data,
-            id: Date.now().toString(),
-            photos: photo,
-            createdAt: Date.now().toString(),
-            saved: false
-        }
-        await addProduct(newProduct as IProduct)
-        console.log(newProduct);
-    }*/
-
 
     const handleClickSeePassword = () => {
         changeType = !changeType

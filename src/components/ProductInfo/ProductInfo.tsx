@@ -2,11 +2,13 @@ import React, {useEffect, useState} from 'react';
 import styled from './ProductInfo.module.css'
 import {useParams} from "react-router";
 import {useGetUserQuery} from "../../store/userAPI";
-import {useGetProductQuery} from "../../store/productAPI";
+import {useGetProductQuery, useUpdateProductMutation} from "../../store/productAPI";
 import photo from '../../assets/icons/location_filled.svg'
-import like from '../../assets/icons/heart-outline-black.svg'
+import unSavedIcon from '../../assets/icons/product-unsaved.svg'
+import savedIcon from '../../assets/icons/product-saved.svg'
 import owner from '../../assets/icons/avatar-owner.svg'
 import Button from "../UI/Common/Button/Button";
+
 
 
 const ProductInfo = () => {
@@ -16,6 +18,18 @@ const ProductInfo = () => {
     const [id, setId] = useState<number>(0);
     const {data: product} = useGetProductQuery(prodId)
     const {data: user} = useGetUserQuery(id)
+
+    const [updateProduct] = useUpdateProductMutation()
+
+    const handleChangeSave = async () => {
+        if(product) {
+            const newObject = {
+                id: product.id,
+                saved: !product.saved
+            }
+            await updateProduct(newObject)
+        }
+    }
     useEffect(() => {
         if (params.id) {
             setProdId(Number(params.id))
@@ -54,16 +68,16 @@ const ProductInfo = () => {
                         <span className={styled.product_detail_owner_top}></span>
                         <div className={styled.owner_info}>
                             <div className={styled.avatar_owner}>
-                                <img src={owner} alt="avatar"/>
+                                <img style={{width: "70px"}} src={owner} alt="avatar"/>
                             </div>
                             <h2 className={styled.product_detail_fullname}>{user && user.fullName}</h2>
                             <p className={styled.product_detail_location}>{user && user.location}</p>
                         </div>
                     </div>
                     <Button className={`${styled.product_detail_chat} ${styled.correct_button}`}>Chat with seller</Button>
-                    <Button className={`${styled.product_detail_like} ${styled.product_detail_chat} ${styled.correct_button}`}>
+                    <Button onClick={handleChangeSave} className={`${styled.product_detail_like} ${styled.product_detail_chat} ${styled.correct_button}`}>
                         <div className={styled.product_detail_like_position}>
-                            <img src={like} alt={"like_product"} style={{marginRight: "14px"}}/>
+                            <img src={product && product.saved ? savedIcon : unSavedIcon } alt={"like_product"} style={{marginRight: "14px"}}/>
                             Add to favorite
                         </div>
                     </Button>
