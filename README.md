@@ -1,6 +1,7 @@
-# Getting Started with Create React App
+# Apiko MarketPlace app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Deployed App on Firebase: [https://apiko-marketplace-2021.herokuapp.com/
+](https://apiko-marketplace-2023-3429c.web.app/)
 
 ## Available Scripts
 
