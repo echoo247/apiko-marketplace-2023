@@ -2,7 +2,7 @@
 
 Deployed App on Firebase: [https://apiko-marketplace-2021.herokuapp.com/
 ](https://apiko-marketplace-2023-3429c.web.app/)
-
+Project Console: [https://console.firebase.google.com/u/0/project/apiko-marketplace-2023-3429c/overview]
 ## Available Scripts
 
 In the project directory, you can run:
