@@ -1,38 +1,37 @@
 import React, {useEffect, useState} from 'react';
 import styled from './ProductInfo.module.css'
 import {useParams} from "react-router";
-import {useGetUserQuery} from "../../store/userAPI";
-import {useGetProductQuery, useUpdateProductMutation} from "../../store/productAPI";
+import {useFetchProductQuery, useUpdateProductMutation} from "../../features/productAPI";
 import photo from '../../assets/icons/location_filled.svg'
 import unSavedIcon from '../../assets/icons/product-unsaved.svg'
 import savedIcon from '../../assets/icons/product-saved.svg'
-import owner from '../../assets/icons/avatar-owner.svg'
 import Button from "../UI/Common/Button/Button";
+import {useFetchUserQuery} from "../../features/userAPI";
 
 
 
 const ProductInfo = () => {
     const [date, setDate] = useState<Date>()
     const params = useParams()
-    const [prodId, setProdId] = useState<number>(0);
-    const [id, setId] = useState<number>(0);
-    const {data: product} = useGetProductQuery(prodId)
-    const {data: user} = useGetUserQuery(id)
+    const [prodId, setProdId] = useState<string>('');
+    const [id, setId] = useState<string>('');
+    const {data: product} = useFetchProductQuery(prodId)
+    const {data: user} = useFetchUserQuery(id)
 
     const [updateProduct] = useUpdateProductMutation()
 
     const handleChangeSave = async () => {
         if(product) {
-            const newObject = {
-                id: product.id,
-                saved: !product.saved
-            }
-            await updateProduct(newObject)
+            await updateProduct({
+                id: prodId,
+                data: {saved: !product.saved}
+            })
         }
     }
+
     useEffect(() => {
         if (params.id) {
-            setProdId(Number(params.id))
+            setProdId(params.id)
         }
         if(product) {
             setId(product.ownerId)
@@ -68,7 +67,12 @@ const ProductInfo = () => {
                         <span className={styled.product_detail_owner_top}></span>
                         <div className={styled.owner_info}>
                             <div className={styled.avatar_owner}>
-                                <img style={{width: "70px"}} src={owner} alt="avatar"/>
+                                {user?.avatar ? <img style={{borderRadius: "50%", width: '2em', height: '2em',}} src={user.avatar} alt={'Avatar'}/>
+                                    :
+                                    <div className={`${styled.avatar_text_wrapper} ${styled.avatar_text_hover}`}>
+                                        {user && user.fullName.split(' ').map((word: string )=> word.charAt(0)).join('')}
+                                    </div>
+                                }
                             </div>
                             <h2 className={styled.product_detail_fullname}>{user && user.fullName}</h2>
                             <p className={styled.product_detail_location}>{user && user.location}</p>
@@ -82,7 +86,6 @@ const ProductInfo = () => {
                         </div>
                     </Button>
                 </div>
-
             </div>
         </div>
     );

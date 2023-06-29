@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styled from './LoginForm.module.css'
 import eyeSeenShow from '../../assets/icons/password-eye.svg'
-
+import {signInWithEmailAndPassword} from 'firebase/auth';
 import FormWrapper from "../UI/Common/FormWrapper/FormWrapper";
 import {useForm, FormProvider, SubmitHandler} from "react-hook-form";
 import InputLabel from "../UI/Common/InputLabel/InputLabel";
@@ -10,9 +10,7 @@ import ButtonHeader from "../UI/Common/Button/Button";
 import {Link, useNavigate} from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
-import {useGetUsersQuery} from "../../store/userAPI";
-import {logoutAction} from "../../features/authSlice";
-import {useAppDispatch} from "../../store/Redux";
+import {auth} from "../../firebase-config/firebase";
 
 
 const schema = yup.object({
@@ -23,33 +21,30 @@ type FormData = yup.InferType<typeof schema>;
 
 
 const LoginForm = () => {
-    const dispatch = useAppDispatch();
     const navigate = useNavigate()
-
+    const [errorMessage, setErrorMessage] = useState('')
     const [seePassword, setSeePassword] = useState<string>('password')
     const methods = useForm<FormData>({
         resolver: yupResolver(schema)
     })
-    const {data: user = []} = useGetUsersQuery()
-
     let changeType:boolean = false
 
     const onSubmit: SubmitHandler<FormData> = async (data) => {
-        const findUser = user.find(u => u.email === data.email)
-        if(findUser) {
-            await dispatch(logoutAction);
-            window.localStorage.setItem("userId", JSON.stringify(findUser?.id))
-            navigate("/")
-        }
-        methods.reset()
+
+        signInWithEmailAndPassword(auth, data.email, data.password)
+            .then(() => {
+                navigate("/")
+                methods.reset()
+            })
+            .catch((error) => {
+                setErrorMessage(error.message)
+            });
     }
 
     const handleClickSeePassword = () => {
         changeType = !changeType
         const type = changeType ? 'text' : 'password'
         setSeePassword(type)
-        console.log(seePassword)
-        console.log(changeType)
     }
 
     return (
@@ -60,12 +55,13 @@ const LoginForm = () => {
                         <InputLabel className={styled.form_login}>
                             EMAIL
                             <span className={styled.input_wrapper_area}>
-                            <Input
-                                name='email'
-                                placeholder="EXAMPLE@gmail.com"
-                                required
-                            />
-                        </span>
+                                <Input
+                                    name='email'
+                                    placeholder="EXAMPLE@gmail.com"
+                                    required
+                                />
+                            </span>
+                            <p className={styled.error}>{methods.formState.errors.email?.message} {errorMessage}</p>
                         </InputLabel>
                         <InputLabel className={styled.form_login}>
                             PASSWORD

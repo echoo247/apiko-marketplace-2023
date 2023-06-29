@@ -6,7 +6,7 @@ import locationIcon from '../../assets/icons/location_filled.svg'
 import ButtonHeader from "../UI/Common/Button/Button";
 import {Input} from "../UI/Common/Input/Input";
 import {useForm, FormProvider, SubmitHandler} from "react-hook-form";
-import {useAppDispatch} from "../../store/Redux";
+import {useAppDispatch} from "../../features/redux-hooks";
 import {FilterType, productsActions} from "../../features/filterSlice";
 import * as yup from "yup";
 
@@ -32,7 +32,6 @@ const HeaderSearch = () => {
 
     const onSubmit: SubmitHandler<FormData> =  (data) => {
         dispatch(productsActions.searchAndSorted(data as FilterType))
-        methods.reset()
     }
 
     return (

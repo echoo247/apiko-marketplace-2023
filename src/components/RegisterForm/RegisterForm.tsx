@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styled from './RegisterForm.module.css'
 import FormWrapper from "../UI/Common/FormWrapper/FormWrapper";
 import {FormProvider, SubmitHandler, useForm} from "react-hook-form";
@@ -9,11 +9,9 @@ import {Link, useNavigate} from "react-router-dom";
 import ButtonHeader from "../UI/Common/Button/Button";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import {useAddUserMutation} from "../../store/userAPI";
-import {registerUser} from "../../features/authSlice";
-import {useAppDispatch} from "../../store/Redux";
-
-
+import {useAddUserMutation} from "../../features/userAPI";
+import {  createUserWithEmailAndPassword  } from 'firebase/auth';
+import { auth } from '../../firebase-config/firebase';
 
 
 const schema = yup.object({
@@ -28,49 +26,45 @@ type FormData = yup.InferType<typeof schema>;
 let changeType:boolean = false
 
 const RegisterForm = () => {
-    const dispatch = useAppDispatch();
-
+    const [errorMessage, setErrorMessage] = useState('')
     const [seePassword, setSeePassword] = useState<string>('password')
     const methods = useForm<FormData>({
         resolver: yupResolver(schema)
     })
-    const [addUser, result] = useAddUserMutation()
+    const [addUser] = useAddUserMutation()
     const navigate = useNavigate()
-
-
-    useEffect(() => {
-        if(result.isSuccess) {
-            window.localStorage.setItem("userId", JSON.stringify(result?.originalArgs?.id))
-            navigate("/")
-        }
-    }, [result])
 
     const onSubmit: SubmitHandler<FormData> = async (data) => {
 
-        const user = {
-            id: Date.now(),
-            email: data.email,
-            fullName: data.fullName,
-            createdAt: Date.now().toString(),
-            phone: '',
-            location: '',
-            avatar: '',
-            productId: [],
-        }
-
-        await addUser(user)
-        dispatch(registerUser(user));
-        methods.reset()
+        await createUserWithEmailAndPassword(auth, data.email, data.password)
+            .then((userCredential) => {
+                // Signed in
+                const userId = userCredential.user.uid;
+                const user = {
+                    email: data.email,
+                    fullName: data.fullName,
+                    createAt: Date.now().toString(),
+                    phone: '',
+                    location: '',
+                    avatar: '',
+                    productId: [],
+                }
+                addUser({
+                    data: user,
+                    uid:userId
+                })
+                methods.reset()
+                navigate("/")
+            })
+            .catch((error) => {
+                setErrorMessage(error.message)
+            });
     }
-
-
 
     const handleClickSeePassword = () => {
         changeType = !changeType
         const type = changeType ? 'text' : 'password'
         setSeePassword(type)
-        console.log(seePassword)
-        console.log(changeType)
     }
 
     return (
@@ -87,7 +81,7 @@ const RegisterForm = () => {
                                         required
                                     />
                             </span>
-                            <p className={styled.error}>{methods.formState.errors.email?.message}</p>
+                            <p className={styled.error}>{methods.formState.errors.email?.message} {errorMessage}</p>
                         </InputLabel>
                         <InputLabel className={styled.form_login}>
                             FULL NAME

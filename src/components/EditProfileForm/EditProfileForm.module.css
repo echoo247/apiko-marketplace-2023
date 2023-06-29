@@ -1,0 +1,54 @@
+.circleContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    margin-bottom: 2em;
+}
+
+.circle {
+    width: 6.5em;
+    height: 6.5em;
+    border-radius: 50%;
+    background-color: #dfee24;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.content span {
+    font-size: 16px;
+}
+
+.content img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+
+
+.upgradeText {
+    position: absolute;
+    bottom: -10px;
+    width: 100%;
+    text-align: center;
+    letter-spacing: .4px;
+    font-size: 13px;
+    color: teal;
+}
+
+.upgradeText span {
+    background-color: #FFFFFF;
+    border: 1px solid teal;
+    border-radius: 5px;
+    padding: 3px;
+    width: 100%;
+    box-sizing: border-box;
+}

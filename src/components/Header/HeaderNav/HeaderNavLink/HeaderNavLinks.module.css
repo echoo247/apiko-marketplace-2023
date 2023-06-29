@@ -21,7 +21,7 @@
     Width: 131px;
     Height: 31px;
 }
-.buttonSell:hover {
+.buttonSell {
     background: #378877;
 }
 
@@ -123,6 +123,7 @@ img {
     text-align: left;
     text-transform: uppercase;
     margin-top: 10px;
+    background-color: #ffffff;
 }
 
 .popup_line {
@@ -139,4 +140,24 @@ img {
     text-align: left;
     text-transform: uppercase;
     margin: 9px 0 0 16px;
+}
+
+
+.avatar_text_wrapper {
+    background-color: #dfee24;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #303030;
+}
+.avatar_text {
+    width: 3.7em;
+    height: 3.7em;
+}
+
+.avatar_text_hover {
+    width: 4.5em;
+    height: 4.5em;
+    font-size: 15px;
 }

@@ -8,8 +8,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const Input: React.FC<InputProps> = ({name, className, ...props}) => {
-    const { register/*, formState: {errors} */} = useFormContext();
-    // const isError = true
+    const { register} = useFormContext();
     return (
         <>
             <input
@@ -17,7 +16,6 @@ export const Input: React.FC<InputProps> = ({name, className, ...props}) => {
                 {...props}
                 className={`${style.input_search_item} ${className}`}
             />
-            {/*{errors[name] && <div>errors[name]?.message</div>}*/}
         </>
     );
 };

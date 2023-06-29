@@ -1,17 +1,19 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from './ProductUpload.module.css'
-import { Input } from "../UI/Common/Input/Input";
+import {Input} from "../UI/Common/Input/Input";
 import InputLabel from "../UI/Common/InputLabel/InputLabel";
 import ButtonHeader from "../UI/Common/Button/Button";
-import {SubmitHandler, useForm, FormProvider} from "react-hook-form";
-import photo from '../../assets/icons/Mask1.svg'
-import {IProduct} from "../../types";
-import {useAddProductMutation} from "../../store/productAPI";
+import {SubmitHandler, useForm, FormProvider, useFieldArray, useWatch} from "react-hook-form";
+import {useAddProductMutation} from "../../features/productAPI";
 import FormWrapper from "../UI/Common/FormWrapper/FormWrapper";
 import * as yup from "yup";
-import {useGetUserQuery, useUpdateUserMutation} from "../../store/userAPI";
+import {useFetchUserQuery, useUpdateUserMutation} from "../../features/userAPI";
 import {useNavigate} from "react-router-dom";
-
+import {useAppSelector} from "../../features/redux-hooks";
+import FileInput from "../UI/Upload";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
+import {storage} from "../../firebase-config/firebase";
 
 
 
@@ -20,43 +22,113 @@ const schema = yup.object({
     description: yup.string().required(),
     price: yup.number().required(),
     location: yup.string().required(),
+    photoFiles: yup.array().required(),
+    photos: yup.array().required(),
 }).required();
-type FormData = yup.InferType<typeof schema>;
+export type FormFields = yup.InferType<typeof schema>;
 
 
 
 const ProductUpload = () => {
-    const idUser = window.localStorage.getItem("userId")
-    const methods = useForm<FormData>()
-    const {data: user} = useGetUserQuery(Number(idUser))
-    const [ addProduct ] = useAddProductMutation()
+    const methods = useForm<FormFields>(
+        {
+            defaultValues: {
+                title: '',
+                description: '',
+                location: '',
+                photoFiles: [],
+                photos: [],
+            },
+            resolver: yupResolver(schema)
+        })
+    const userId = useAppSelector(state => state.auth.id)
+    const [initState, setInitState] = useState(0);
+    const [percent, setPercent] = useState(0);
+    const {data: user} = useFetchUserQuery(userId)
+    const [addProduct] = useAddProductMutation()
     const [updateUser] = useUpdateUserMutation()
     const navigation = useNavigate()
 
-    const onSubmit: SubmitHandler<FormData> = async (data) => {
+    const photoTypeFile = useWatch({
+        control: methods.control,
+        name: "photoFiles",
+    })
+    const {
+        fields: fileFields,
+        remove: removeFile
+    } = useFieldArray({
+        control: methods.control,
+        name: "photoFiles"
+    });
 
-        if(user) {
-            const newProduct = {
-                ...data,
-                id: Date.now(),
-                photos: photo,
-                ownerId: user.id,
-                createdAt: Date.now().toString(),
-                saved: false
-            }
-            await addProduct(newProduct as IProduct)
+    const {append: appendUrl} = useFieldArray({
+        control: methods.control,
+        name: "photos"
+    });
 
-            if (user.productId) {
-                const newObject = {
-                    id: user.id,
-                    productId: [...user.productId, newProduct.id]
-                }
-                await updateUser(newObject )
-                console.log("array", newObject)
+    const thumbs = fileFields.map((file, index) => (
+        <img
+            onClick={() => removeFile(index)}
+            key={file.id}
+            src={file.preview}
+            alt={`avatar:${index}`}
+            onLoad={() => { URL.revokeObjectURL(file.preview) }}
+        />
+    ));
+
+    useEffect( () => {
+        if (photoTypeFile.length > 0) {
+            for (let i = initState; i < photoTypeFile.length; ++i) {
+
+                const file: File = photoTypeFile[i];
+                const storageRef = ref(storage,`/product/${file.name}`)
+                const uploadTask = uploadBytesResumable(storageRef, file);
+
+                 uploadTask.on(
+                    "state_changed",
+                    (snapshot) => {
+                        const percent = Math.round(
+                            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                        );
+                        setPercent(percent);
+                    },
+                    (err) => console.log(err),
+                     () => {
+                        // download url
+                         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                            appendUrl(url)
+                        });
+                    }
+                );
             }
-            methods.reset()
-            navigation('/')
+            setInitState(photoTypeFile.length)
         }
+    }, [photoTypeFile])
+
+    const onSubmit: SubmitHandler<FormFields> = async (data) => {
+        const newProduct = {
+            title: data.title,
+            description: data.description,
+            price: data.price,
+            location: data.location,
+            photos: data.photos,
+            ownerId: userId,
+            createdAt: Date.now().toString(),
+            saved: false
+        }
+        const id = Date.now().toString()
+        await addProduct({
+            id: id,
+            data: newProduct,
+        })
+
+        await updateUser({
+            id: userId,
+            data: {productId: [...user?.productId, id]}
+        })
+
+        methods.reset()
+        navigation('/')
     }
 
 
@@ -68,7 +140,6 @@ const ProductUpload = () => {
                     <InputLabel className={styled.form_upload}>
                         TITLE
                         <span className={styled.input_wrapper_area}>
-
                           <Input
                               placeholder="For example: Iron man suit"
                               name='title'
@@ -86,8 +157,7 @@ const ProductUpload = () => {
                     </InputLabel>
                     <InputLabel className={styled.form_upload}>
                         DESCRIPTION
-                        <span  className={styleDescription}>`
-
+                        <span  className={styleDescription}>
                             <Input
                                 placeholder="For example: Iron man suit"
                                 className={styled.input_search_item}
@@ -97,12 +167,21 @@ const ProductUpload = () => {
                     </InputLabel>
                     <InputLabel className={styled.form_upload}>
                         PHOTOS
-                        <span className={styled.input_wrapper_area}>
-                            {/*<Input
-                                name='files'
-                                placeholder="For example: Iron man suit"
-                                className={styled}
-                            />*/}
+                        <span className={`${styled.input_wrapper_area} ${styled.inputField}`}>
+                             <div className={styled.square}>
+                                    <div className={styled.plus}>
+                                        <FileInput
+                                            multiple
+                                            name='photoFiles'
+                                            maxfile={0}
+                                        />
+                                    </div>
+                             </div>
+
+                            <div className={styled.photoPreview}>
+                                {thumbs[0] && thumbs}
+                            </div>
+
                         </span>
                     </InputLabel>
                     <InputLabel className={styled.form_upload}>

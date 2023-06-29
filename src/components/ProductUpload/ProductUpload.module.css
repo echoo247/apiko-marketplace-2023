@@ -30,6 +30,8 @@
     flex-direction: row;
     align-items: center;
     margin-bottom: 14px;
+    position: relative;
+
 }
 
 .input_description {
@@ -54,4 +56,59 @@
     width: 500px;
     height: auto;
     padding: 20px 15px;
+}
+
+
+.inputField {
+    max-height: none;
+    padding: 10px;
+}
+
+.square {
+    box-sizing: border-box;
+    border-radius: 4px;
+    left: 0;
+    top: 0;
+    width: 92px;
+    height: 92px;
+    background-color: #E4E4E4;
+}
+
+.plus {
+    position: absolute;
+    transform-origin: center;
+}
+
+.plus:before,
+.plus:after {
+    box-sizing: border-box;
+    content: "";
+    position: absolute;
+    left: 27px;
+    top: 40px;
+    width: 38px;
+    height: 4px;
+    background-color: teal;
+    border-radius: 4px;
+}
+
+.plus:after {
+    transform: rotate(90deg);
+}
+
+.photo {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.photoPreview {
+    display: flex;
+    margin-left: 10px;
+}
+
+.photoPreview img {
+    width: 92px;
+    height: 92px;
+    object-fit: cover;
 }

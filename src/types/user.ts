@@ -1,11 +1,12 @@
-
 export interface IUser {
-    id: number;
+    id: string;
     email: string;
     fullName: string;
     phone?: string;
-    createdAt: string;
+    createAt: string;
     location?: string;
     avatar?: string;
-    productId?: number[];
+    productId?: string[];
 }
+
+export type Users = IUser[];

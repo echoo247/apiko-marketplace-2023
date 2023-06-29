@@ -1,9 +1,7 @@
-
-
 export interface IProduct {
-    id: number;
+    id: string;
     photos: string;
-    ownerId: number
+    ownerId: string
     title: string;
     price: number;
     description: string;
@@ -11,3 +9,5 @@ export interface IProduct {
     createdAt: string;
     saved: boolean;
 }
+
+export type Products = IProduct[];

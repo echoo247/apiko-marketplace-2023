@@ -8,24 +8,36 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ProductPage from "./pages/ProductPage";
 import {ProtectedRoute} from "./route/ProtectedRoute";
-import {useCheckIsAuthQuery} from "./store/userAPI";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import SavedProduct from "./pages/SavedProduct";
-import {useAppSelector} from "./store/Redux";
+import {useAppDispatch, useAppSelector} from "./features/redux-hooks";
+import { auth } from './firebase-config/firebase';
+import { onAuthStateChanged } from "firebase/auth";
+import {removeUser, setUser} from "./features/authSlice";
+
 
 function App() {
     const navigation = useNavigate()
-    const userId = window.localStorage.getItem('userId') || '';
+    const dispatch = useAppDispatch()
     const {isAuth} = useAppSelector(state => state.auth)
-    const {status} = useCheckIsAuthQuery(Number(userId))
 
-    useEffect(() => {
-        if(status === 'rejected') {
-            navigation('/login')
-        }
-    }, [])
+    useEffect(()=>{
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/firebase.User
+                const userId = user.uid;
+                dispatch(setUser({id: userId}))
+                // ...
+            } else {
+                dispatch(removeUser())
+                navigation('/login', { replace: true })
+                console.log("user is logged out")
+            }
+        });
 
+    }, [isAuth])
   return (
         <div className="wrapper">
             <Routes>

@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IProduct} from "../types";
+import {IProduct, Products} from "../types";
 
 
 
@@ -16,7 +16,6 @@ const initialState: FilterProducts = {
     filteredProducts: [],
     isLoading: true,
     search: ""
-
 }
 
 export interface FilterType {
@@ -31,7 +30,7 @@ const productsSlice = createSlice({
     name: "products",
     initialState: initialState,
     reducers: {
-        productsSuccess: (state, action: PayloadAction<IProduct[]>) =>  {
+        productsSuccess: (state, action: PayloadAction<Products>) =>  {
             const newState = action.payload
             if(newState) {
                 state.products = newState

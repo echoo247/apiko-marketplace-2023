@@ -5,7 +5,7 @@ import gridIcon from '../../assets/icons/selectGrid.svg'
 import InputLabel from "../UI/Common/InputLabel/InputLabel";
 import {Input} from "../UI/Common/Input/Input";
 import {FormProvider, SubmitHandler, useForm} from "react-hook-form";
-import {useAppDispatch, useAppSelector} from "../../store/Redux";
+import {useAppDispatch, useAppSelector} from "../../features/redux-hooks";
 import {FilterType, productsActions} from "../../features/filterSlice";
 import * as yup from "yup";
 import Button from "../UI/Common/Button/Button";
@@ -20,13 +20,13 @@ type FormData = yup.InferType<typeof schema>;
 const Filter = () => {
     const dispatch = useAppDispatch();
     const methods = useForm<FormData>()
-    const products = useAppSelector((state) => state.product.products);
+    const products = useAppSelector((state) => state.product.filteredProducts);
 
 
     useEffect(() => {
         if(products) {
-            let priceFrom = Infinity;
-            let priceTo = -Infinity;
+            let priceFrom = 0;
+            let priceTo = 0;
             products.forEach(function(object) {
                 if (object.price < priceFrom) {
                     priceFrom = object.price;
@@ -42,7 +42,6 @@ const Filter = () => {
 
     const onSubmit: SubmitHandler<FormData> =  (data) => {
         dispatch(productsActions.searchAndSorted(data as FilterType))
-        methods.reset()
     }
 
     return (

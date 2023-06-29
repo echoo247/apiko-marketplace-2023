@@ -1,80 +1,37 @@
-import {createAction, createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import axios from 'axios';
-import {userAPI} from "../store/userAPI";
+import {createSlice} from '@reduxjs/toolkit';
 
-interface User {
-    id: number
-    fullName: string;
-    email: string;
-}
 
-interface RegisterResponse {
-    message: string;
-}
+
 
 interface AuthState {
-    loading: boolean;
     isAuth: boolean;
-    error: string | null;
+    id: string | null;
 }
 
-export const registerUser = createAsyncThunk<RegisterResponse, Omit<User, 'createAt'>, { rejectValue: string }>(
-    'auth/registerUser',
-    async (userData, { rejectWithValue }) => {
-        try {
-            const response = await axios.post<RegisterResponse>('http://localhost:3001/users/', userData.id);
-            return response.data;
-        } catch (error) {
-            return rejectWithValue('error');
-        }
-    }
-);
-
 const initialState: AuthState = {
-    loading: false,
-    error: null,
     isAuth: false,
+    id: null,
 };
 
-export const logoutAction = createAction('LOGOUT_ACTION_TYPE')
 
-const authSlice = createSlice({
+const authUser = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
-    extraReducers: (builder) => {
-        builder
-            .addCase(logoutAction, (state) => {
-                state.isAuth = false
-                state.loading = false
-                state.error = null
-                console.log('s', state)
-            })
-            .addCase(registerUser.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
-            .addCase(registerUser.fulfilled, (state) => {
-                state.loading = false;
-                state.error = null;
-                state.isAuth = true;
-                // Виконати необхідні дії після успішної реєстрації
-            })
-            .addCase(registerUser.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload as string;
-            })
-            .addMatcher(
-                userAPI.endpoints.checkIsAuth.matchFulfilled,
-                (state) => {
-                    state.isAuth = true
-                    state.loading = false
-                    state.error = null
-                }
-            )
+    reducers: {
+        setUser(state, action) {
+            state.isAuth = true
+            state.id = action.payload.id;
+
+        },
+        removeUser(state) {
+            state.id = null
+            state.isAuth = false;
+        }
     },
 });
 
-export default authSlice.reducer;
+export const {setUser, removeUser} = authUser.actions;
+
+export default authUser.reducer;
 
 

@@ -1,43 +1,51 @@
 import React from 'react';
 import styled from './HeaderNavLinks.module.css'
 import {Link, useNavigate} from "react-router-dom";
-import ButtonHeader from "../../../UI/Common/Button/Button";
 import heartWhite from "../../../../assets/icons/heart-outline-white.svg"
 import heartBlack from "../../../../assets/icons/heart-outline-black.svg"
-import {useAppDispatch, useAppSelector} from "../../../../store/Redux";
-import {logoutAction} from "../../../../features/authSlice";
-import avatar from '../../../../assets/icons/avatar-owner.svg'
-import {useGetUserQuery} from "../../../../store/userAPI";
+import {useAppSelector} from "../../../../features/redux-hooks";
 import Button from "../../../UI/Common/Button/Button";
+import {useFetchUserQuery} from "../../../../features/userAPI";
+import {auth} from "../../../../firebase-config/firebase";
+import {signOut} from "firebase/auth";
+import {useLocation} from "react-router";
+
 
 
 const HeaderNavLinks = () => {
-    const link = window.location.pathname === "/register"  || window.location.pathname === "/login"
+    const location = useLocation()
+    const link = location.pathname === "/register"  || location.pathname === "/login"
     const navigation = useNavigate()
-    const isAuth = useAppSelector(state => state.auth.isAuth)
-    const dispatch = useAppDispatch()
-    const userId = Number(window.localStorage.getItem('userId')) ?? 0
-    const {data: user} = useGetUserQuery(userId)
+    const {isAuth, id: userId} = useAppSelector(state => state.auth)
+    const {data: user} = useFetchUserQuery(userId)
 
     const handleLogout = () => {
-        window.localStorage.removeItem('userId')
-        navigation('/login', { replace: true })
-        dispatch(logoutAction())
+        signOut(auth).then(() => {
+            // Sign-out successful.
+            console.log("Signed out successfully")
+        }).catch((error) => {
+            console.log("error log out: ", error)
+        });
     }
+
+    const initials = user && user.fullName.split(' ').map((word: string )=> word.charAt(0)).join('')
 
     return (
         <div className={styled.header_nav_links}>
-            <Link to="/upload">
-                <ButtonHeader className={styled.buttonSell}>
-                    Sell
-                </ButtonHeader>
-            </Link>
+            <Button onClick={() => navigation('/upload')} className={styled.buttonSell}>
+                Sell
+            </Button>
             {isAuth
-                ? <ButtonHeader className={`${styled.buttonLogin} ${styled.popup_position}`}>
+                ? <div className={`${styled.buttonLogin} ${styled.popup_position}`}>
                     <div className={styled.avatar_block_popup}>
                         <div className={styled.avatar_popup_wrapper}>
                             <div className={styled.popup_header}>
-                                <img style={{width: "50px"}} src={avatar} alt={'Avatar'}/>
+                                {user?.avatar ? <img style={{borderRadius: "50%", width: '4.5em', height: '4.5em',}} src={user.avatar} alt={'Avatar'}/>
+                                    :
+                                    <div className={`${styled.avatar_text_wrapper} ${styled.avatar_text_hover}`}>
+                                        {initials}
+                                    </div>
+                                }
                                 <div className={styled.popup_text_wrapper}>
                                     <div>
                                         <div className={styled.popup_text}>
@@ -57,16 +65,16 @@ const HeaderNavLinks = () => {
                         <div className={styled.popup_line}></div>
                         <div className={styled.popup_logout} onClick={handleLogout}>Logout</div>
                     </div>
-                    <img style={{width: "40px"}} src={avatar} alt={'avatar'}/>
-            </ButtonHeader>
-                : <Link to="/login">
-                        <ButtonHeader className={link ?
-                            `${styled.buttonLogin} ${styled.buttonLogin_state}` : styled.buttonLogin}>
-                            LOGIN
-                        </ButtonHeader>
-                    </Link>
-            }
+                    {user?.avatar ? <img style={{borderRadius: "50%", width: '3.7em', height: '3.7em',}} src={user.avatar} alt={'avatar'}/>
+                        : <div className={`${styled.avatar_text_wrapper} ${styled.avatar_text}`}>{initials}</div>
+                    }
 
+            </div>
+                : <Button onClick={() => navigation('/login')} className={link ?
+                    `${styled.buttonLogin} ${styled.buttonLogin_state}` : styled.buttonLogin}>
+                    LOGIN
+                </Button>
+            }
             <Link to="/saved">
                 <img src={link ? heartBlack : heartWhite} alt='Heart'/>
             </Link>
