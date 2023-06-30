@@ -3,6 +3,8 @@
 Deployed App on Firebase: [(https://apiko-marketplace-2023-3429c.web.app/)]
 
 Project Console: [https://console.firebase.google.com/u/0/project/apiko-marketplace-2023-3429c/overview]
+
+Maket Figma: [https://www.figma.com/file/GVlR9LNtTLfFblq12R9L4RV6/Apiko-Marketplace?type=design&node-id=0-1&mode=design&t=AIxEiD25jF1oQfM0-0]
 ## Available Scripts
 
 In the project directory, you can run:
